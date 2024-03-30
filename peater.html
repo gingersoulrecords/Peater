@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Peater</title>
+    <link rel="stylesheet" href="peater.css">
+
+</head>
+
+<body>
+    <textarea id="mytextarea">
+        {
+            "peaters": [
+                {
+                    "type": "textarea",
+                    "value": "Hello, World!"
+                }
+            ]
+        }
+
+    </textarea>
+
+    <!-- Footer -->
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/js-beautify/1.15.1/beautify.min.js"></script>
+
+    <script src="peater.js"></script>
+    <script>
+        $('#mytextarea').peater();
+    </script>
+
+</body>
+
+</html>
