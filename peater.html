@@ -12,14 +12,28 @@
 <body>
     <textarea id="mytextarea">
         {
-            "peaters": [
-                {
-                    "type": "textarea",
-                    "value": "Hello, World!"
-                }
-            ]
-        }
-
+            "peaters": [{
+              "fields": [{
+                "label": "Abbreviation",
+                "type": "input",
+                "value": "hw"
+              }, {
+                "label": "Output",
+                "type": "textarea",
+                "value": "Hello, World!"
+              }]
+            }, {
+              "fields": [{
+                "label": "Abbreviation",
+                "type": "input",
+                "value": ":h"
+              }, {
+                "label": "Output",
+                "type": "textarea",
+                "value": ":has(something)"
+              }]
+            }]
+          }
     </textarea>
 
     <!-- Footer -->
