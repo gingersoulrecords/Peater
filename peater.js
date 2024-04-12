@@ -2,46 +2,62 @@
     $.fn.peater = function (options) {
         const peater = {
             elements: {},
-            peaters: {},
+            peaterRows: {},
+
 
             init(element) {
                 console.log('Peater initialized');
-                this.indexPeaters(element);
+                //this.indexPeaters(element);
+                this.indexPeaterRows(element);
+
+                this.checkTextareaContentAndPopulateIfEmpty(options);
+
                 this.beautifyInitialTextareaContent();
-                this.buildPeaters();
+                //this.buildPeaters();
+                this.buildPeaterRows();
+
                 this.bindEventHandlersToExistingElements();
             },
 
+            checkTextareaContentAndPopulateIfEmpty(options) {
+                $.each(this.peaterRows, (index, peaterRow) => {
+                    if (!$(peaterRow).val()) {
+                        const jsonData = JSON.stringify(options);
+                        $(peaterRow).val(jsonData);
+                    }
+                });
+            },
+
             beautifyInitialTextareaContent() {
-                $.each(this.peaters, (index, peater) => {
-                    const data = JSON.parse($(peater).val());
+                $.each(this.peaterRows, (index, peaterRow) => {
+                    const data = JSON.parse($(peaterRow).val());
                     const beautifiedJson = js_beautify(JSON.stringify(data), { indent_size: 2 });
-                    $(peater).val(beautifiedJson);
+                    $(peaterRow).val(beautifiedJson);
                 });
             },
 
-            indexPeaters(element) {
+            indexPeaterRows(element) {
                 $(element).each((index, el) => {
-                    this.peaters[index] = el;
+                    this.peaterRows[index] = el;
                 });
             },
 
-            buildPeaters() {
-                $.each(this.peaters, (index, peater) => {
-                    const data = JSON.parse($(peater).val());
-                    data.peaters.reverse(); // Reverse the order of the peaters array
-                    $.each(data.peaters, (i, item) => {
+            buildPeaterRows() {
+                $.each(this.peaterRows, (index, peaterRow) => {
+                    const data = JSON.parse($(peaterRow).val());
+                    data.peaterRows.reverse(); // Reverse the order of the peaterRows array
+                    $.each(data.peaterRows, (i, item) => {
                         const row = this.createRow(i, item); // Pass `item` instead of `item.value`
-                        $(peater).after(row);
+                        $(peaterRow).after(row);
                     });
                     this.bindEventHandlersToExistingElements();
                     this.checkRowCountAndToggleDeleteButtons();
                 });
             },
 
-            createRow(index, peater) {
+            createRow(index, peaterRow) {
                 const row = $(`<div class="peater-row"></div>`).attr('data-index', index);
-                $.each(peater.fields, (i, field) => {
+                $.each(peaterRow.fields, (i, field) => {
                     const name = field.label.toLowerCase().replace(/\s+/g, '-') + '-' + index;
                     const formField = $(`<${field.type}></${field.type}>`)
                         .attr('name', name)
@@ -57,7 +73,6 @@
                 row.append(deleteButton, addButton);
                 return row;
             },
-
 
             bindEventHandlersToExistingElements() {
                 this.bindInputHandlerToFields();
@@ -85,13 +100,12 @@
                 });
             },
 
-
             updateJsonFromFields() {
-                $.each(this.peaters, (index, peater) => {
+                $.each(this.peaterRows, (index, peaterRow) => {
                     const data = {
-                        peaters: []
+                        peaterRows: []
                     };
-                    $(peater).nextAll('.peater-row').each((i, row) => {
+                    $(peaterRow).nextAll('.peater-row').each((i, row) => {
                         const rowData = {
                             fields: []
                         };
@@ -104,16 +118,16 @@
                             };
                             rowData.fields.push(fieldData);
                         });
-                        data.peaters.push(rowData);
+                        data.peaterRows.push(rowData);
                     });
                     const beautifiedJson = js_beautify(JSON.stringify(data), { indent_size: 2 });
-                    $(peater).val(beautifiedJson);
+                    $(peaterRow).val(beautifiedJson);
                 });
             },
 
             checkRowCountAndToggleDeleteButtons() {
-                $.each(this.peaters, (index, peater) => {
-                    const rows = $(peater).nextAll('.peater-row');
+                $.each(this.peaterRows, (index, peaterRow) => {
+                    const rows = $(peaterRow).nextAll('.peater-row');
                     if (rows.length === 1) {
                         rows.find('.peater-delete-row').prop('disabled', true);
                     } else {

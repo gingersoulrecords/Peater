@@ -10,31 +10,33 @@
 </head>
 
 <body>
-    <textarea id="mytextarea">
-        {
-            "peaters": [{
-              "fields": [{
-                "label": "Abbreviation",
-                "type": "input",
-                "value": "hw"
-              }, {
-                "label": "Output",
-                "type": "textarea",
-                "value": "Hello, World!"
-              }]
-            }, {
-              "fields": [{
-                "label": "Abbreviation",
-                "type": "input",
-                "value": ":h"
-              }, {
-                "label": "Output",
-                "type": "textarea",
-                "value": ":has(something)"
-              }]
-            }]
-          }
-    </textarea>
+    <!-- <textarea id="mytextarea">
+{
+  "peaterRows": [{
+    "fields": [{
+      "label": "Abbreviation",
+      "type": "input",
+      "value": "asdf"
+    }, {
+      "label": "Output",
+      "type": "textarea",
+      "value": "fdsa"
+    }]
+  }, {
+    "fields": [{
+      "label": "Abbreviation",
+      "type": "input",
+      "value": ""
+    }, {
+      "label": "Output",
+      "type": "textarea",
+      "value": ""
+    }]
+  }]
+}
+    </textarea> -->
+
+    <textarea id="mytextarea"></textarea>
 
     <!-- Footer -->
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
@@ -42,7 +44,45 @@
 
     <script src="peater.js"></script>
     <script>
-        $('#mytextarea').peater();
+        //$('#mytextarea').peater();
+
+        // $('#mytextarea').peater({
+        //     peaterRows: [{
+        //         fields: [{
+        //             label: "Abbreviation",
+        //             type: "input",
+        //             value: "hw"
+        //         }, {
+        //             label: "Output",
+        //             type: "textarea",
+        //             value: "Hello, World!"
+        //         }]
+        //     }]
+        // });
+
+        $('#mytextarea').peater({
+            "peaterRows": [{
+                "fields": [{
+                    "label": "Abbreviation",
+                    "type": "input",
+                    "value": "asdf"
+                }, {
+                    "label": "Output",
+                    "type": "textarea",
+                    "value": "fdsa"
+                }]
+            }, {
+                "fields": [{
+                    "label": "Abbreviation",
+                    "type": "input",
+                    "value": "asdf"
+                }, {
+                    "label": "Output",
+                    "type": "textarea",
+                    "value": "fdasdfasdfsa"
+                }]
+            }]
+        });
     </script>
 
 </body>
