@@ -8,16 +8,8 @@
                 console.log('Peater initialized');
                 this.indexPeaters(element);
                 this.beautifyInitialTextareaContent();
-                this.storePeaterData();
                 this.buildPeaters();
                 this.bindEventHandlersToExistingElements();
-            },
-
-            storePeaterData() {
-                this.peaterData = {};
-                $.each(this.peaters, (index, peater) => {
-                    this.peaterData[index] = JSON.parse($(peater).val());
-                });
             },
 
             beautifyInitialTextareaContent() {
@@ -37,6 +29,7 @@
             buildPeaters() {
                 $.each(this.peaters, (index, peater) => {
                     const data = JSON.parse($(peater).val());
+                    data.peaters.reverse(); // Reverse the order of the peaters array
                     $.each(data.peaters, (i, item) => {
                         const row = this.createRow(i, item); // Pass `item` instead of `item.value`
                         $(peater).after(row);
@@ -92,33 +85,6 @@
                 });
             },
 
-            // updateJsonFromFields() {
-            //     $.each(this.peaters, (index, peater) => {
-            //         const data = {
-            //             peaters: []
-            //         };
-            //         $(peater).nextAll('.peater-row').each((i, row) => {
-            //             const rowData = {
-            //                 fields: []
-            //             };
-            //             $(row).find('input, textarea').each((j, field) => {
-            //                 console.log(field);
-            //                 const fieldData = {
-            //                     type: field.tagName.toLowerCase(),
-            //                     name: field.name,
-            //                     value: field.value,
-            //                     label: $(`label[for='${field.name.toLowerCase()}']`).text(),
-
-
-            //                 };
-            //                 rowData.fields.push(fieldData);
-            //             });
-            //             data.peaters.push(rowData);
-            //         });
-            //         const beautifiedJson = js_beautify(JSON.stringify(data), { indent_size: 2 });
-            //         $(peater).val(beautifiedJson);
-            //     });
-            // },
 
             updateJsonFromFields() {
                 $.each(this.peaters, (index, peater) => {
@@ -163,16 +129,15 @@
             },
 
             addRow(id) {
-                const blueprint = this.peaterData[0].peaters[0]; // Use the first peater's data as the blueprint
+                const firstRow = $('.peater-row').first();
                 const newRowData = {
                     fields: []
                 };
-                $.each(blueprint.fields, (i, field) => {
-                    const name = field.label.toLowerCase().replace(/\s+/g, '-') + '-' + (id + 1);
+                firstRow.find('input, textarea').each((i, field) => {
+                    const label = $(`label[for='${field.name.toLowerCase()}']`).first().text();
                     const fieldData = {
-                        type: field.type,
-                        name: name,
-                        label: field.label,
+                        label: label,
+                        type: field.tagName.toLowerCase(),
                         value: ''
                     };
                     newRowData.fields.push(fieldData);
