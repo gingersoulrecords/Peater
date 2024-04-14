@@ -59,10 +59,18 @@
                 const row = $(`<div class="peater-row"></div>`).attr('data-index', index);
                 $.each(peaterRow.fields, (i, field) => {
                     const name = field.label.toLowerCase().replace(/\s+/g, '-') + '-' + index;
-                    const formField = $(`<${field.type}></${field.type}>`)
-                        .attr('name', name)
-                        .attr('id', name)
-                        .val(field.value);
+                    let formField;
+                    if (field.type === 'text') {
+                        formField = $(`<input type="text">`)
+                            .attr('name', name)
+                            .attr('id', name)
+                            .val(field.value);
+                    } else {
+                        formField = $(`<${field.type}></${field.type}>`)
+                            .attr('name', name)
+                            .attr('id', name)
+                            .val(field.value);
+                    }
                     const label = $(`<label></label>`)
                         .attr('for', name)
                         .text(field.label);
