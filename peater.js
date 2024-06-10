@@ -144,6 +144,12 @@
                 });
             },
 
+            updateRowIndex() {
+                $('.peater-row').each(function (index) {
+                    $(this).attr('data-index', index);
+                });
+            },
+
             deleteRow(id) {
                 $(`.peater-row[data-index="${id}"]`).remove();
                 this.updateJsonFromFields();
@@ -171,6 +177,8 @@
                 this.bindClickHandlerToAddButton();
                 this.updateJsonFromFields();
                 this.checkRowCountAndToggleDeleteButtons();
+                this.updateRowIndex();
+
             },
         };
 
